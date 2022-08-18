@@ -32,4 +32,4 @@ d = { 'settings': { 'allowed_cell_metadata_keys': '',
                 'tst_flags': '',
                 'user': 'tkharrat',
                 'version': '0.0.1'},
-  'syms': { 'omniFeatures.Feature.pressurelines': { 'omniFeatures.Feature.pressurelines.Pressureline_feature': 'https://tkharrat.github.io/omniFeatures/Feature.pressurelines.html#pressureline_feature'}}}
+  'syms': { 'omniFeatures.Feature.pressurelines': { 'omniFeatures.Feature.pressurelines.Pressurelines_feature': 'https://tkharrat.github.io/omniFeatures/Feature.pressurelines.html#pressurelines_feature'}}}
