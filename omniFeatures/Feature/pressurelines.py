@@ -72,7 +72,7 @@ def _cluster(frame, n_clusters=3):
         #calculate distance between centeroid & ball
         clt_coord = dict(
             map(
-                lambda coord: (coord[0], ball_dist(coord[1], [ball_coord[0], ball_coord[1]])),
+                lambda coord: (coord[0], ball_dist(ball_coord,coord[1])),
                 clt_coord.items()))
         #sort dict
         clt_coord = dict(sorted(clt_coord.items(), key=lambda item: item[1]))
