@@ -34,6 +34,4 @@ d = { 'settings': { 'allowed_cell_metadata_keys': '',
                 'tst_flags': 'notest',
                 'user': 'tkharrat',
                 'version': '0.0.1'},
-  'syms': { 'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines',
-                                                     'omniFeatures.Features.pressurelines.PressureLines.fit': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines.fit',
-                                                     'omniFeatures.Features.pressurelines.PressureLines.plot': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines.plot'}}}
+  'syms': { 'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines'}}}
