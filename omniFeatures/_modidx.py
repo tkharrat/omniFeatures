@@ -37,4 +37,5 @@ d = { 'settings': { 'allowed_cell_metadata_keys': '',
   'syms': { 'omniFeatures.Features.distance_angle': { 'omniFeatures.Features.distance_angle.Dist_ang': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang',
                                                       'omniFeatures.Features.distance_angle.Dist_ang.angle': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang.angle',
                                                       'omniFeatures.Features.distance_angle.Dist_ang.dist': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang.dist'},
+            'omniFeatures.Features.pitch_control': {},
             'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines'}}}
