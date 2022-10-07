@@ -143,3 +143,4 @@ checklink/cookies.txt
 .gitconfig
 
 data/tracking_df.csv
+data/tracking_vel_df.csv
