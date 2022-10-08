@@ -39,4 +39,11 @@ d = { 'settings': { 'allowed_cell_metadata_keys': '',
                                                       'omniFeatures.Features.distance_angle.Dist_ang.dist': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang.dist'},
             'omniFeatures.Features.pitch_control': {},
             'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines'},
-            'omniFeatures.pitch_control': {}}}
+            'omniFeatures.pitch_control': { 'omniFeatures.pitch_control.PITCH_SIZE': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitch_size',
+                                            'omniFeatures.pitch_control.PitchControl': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol',
+                                            'omniFeatures.pitch_control.PitchControl.ball_travel_time': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.ball_travel_time',
+                                            'omniFeatures.pitch_control.PitchControl.pitch_control_probability': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.pitch_control_probability',
+                                            'omniFeatures.pitch_control.PitchControl.prepare_data': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.prepare_data',
+                                            'omniFeatures.pitch_control.PitchControl.probability_intercept_ball': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.probability_intercept_ball',
+                                            'omniFeatures.pitch_control.PitchControl.simple_time_to_intercept': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.simple_time_to_intercept',
+                                            'omniFeatures.pitch_control.PitchControl.time_grid': 'https://tkharrat.github.io/omniFeatures/pitch_control.html#pitchcontrol.time_grid'}}}
