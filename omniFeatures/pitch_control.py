@@ -9,8 +9,11 @@ from typing import Any, Callable, Optional, Tuple
 
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
+
 from fastcore.basics import *
 from fastcore.foundation import L
+from omnisync.visualization.pitch import Pitch,plot_pitch
 
 # %% ../nbs/03_pitch_control_clean.ipynb 6
 PITCH_SIZE = (105, 68)
@@ -40,9 +43,9 @@ class PitchControl:
         # pitch grid
         self.pitch_cells = np.array(
             [
-                [i, j]
-                for i in range(self.pitch_size[0])
-                for j in range(self.pitch_size[1])
+                [j, i]
+                for i in range(self.pitch_size[1])
+                for j in range(self.pitch_size[0])
             ]
         )
 
@@ -245,7 +248,6 @@ def time_grid(
     )
     time_steps_cp = time_steps.copy()
     time_steps_cp[cancel_cells] = np.nan
-
     return time_steps_cp
 
 
@@ -291,7 +293,7 @@ def pitch_control_probability(
 
     Returns
     -------
-    Tupel[np.ndarray, np.ndarray, np.ndarray]
+    Tuple[np.ndarray, np.ndarray, np.ndarray]
         + players: n_locations x n_players: probability for every location, for the player to control the space
         + attacking: n_times, n_locations: the probability at each time step for the attacking team to control the location
         + defending: n_times, n_locations: the probability at each time step for the defending team to control the location
@@ -377,3 +379,114 @@ def pitch_control_probability(
         time_iter += 1
     
     return players_ppcf, ppcf_att, ppcf_def, unit_intercept_probs
+
+# %% ../nbs/03_pitch_control_clean.ipynb 32
+@patch
+def plot_pc(
+    self: PitchControl,
+    np_frame: np.ndarray,  # frame data produced by `prepare_data()` method
+    pc_players: np.ndarray,# pitch control probabilty players
+    pitch_size: Tuple[int, int] = PITCH_SIZE,
+):
+    """Plot Pitch control using omniSync `Pitch` class
+    
+    Returns
+    -------
+    plotly graph
+
+    """
+    
+    
+    # extract attacking players from `pc_players` with index 1 for att and 3 for GK att.
+    idx = np_frame[:,5]
+    att_filter = np.where( ( idx == 1)  | (idx == 3) )
+    def_filter = np.where( ( idx == 0)  | (idx == 4) )
+    ball_filter = np.where( idx == -1)
+    
+    pc_att = pc_players[:,att_filter]
+    pc_att = np.squeeze(pc_att, axis=1)
+    
+    # compute pitch control of the attacking team
+    pc_att = pc_att.sum(axis=1) 
+    
+    # extract att,def team and ball position for plot
+    att_x, att_y = np_frame[att_filter][:,1], np_frame[att_filter][:,2]
+    def_x, def_y  = np_frame[def_filter][:,1], np_frame[def_filter][:,2]   
+    ball_x, ball_y = np_frame[ball_filter][:,1], np_frame[ball_filter][:,2]   
+    
+    # prepare the x and y axis for the heatmap inputs
+    xgrid = np.arange(pitch_size[0])
+    ygrid = np.arange(pitch_size[1])
+    
+    # reshape to respect the heatmap input
+    pc_att = np.reshape(pc_att, (pitch_size[1], pitch_size[0]))
+    
+    # initialise empty pitch
+    pitch = Pitch()
+    p = pitch.plot_pitch(show=False)
+    
+    # plot the heatmap
+    p.add_trace(
+       go.Heatmap(
+            z = pc_att,
+            x = xgrid - pitch.pitch_size[0] / 2.02,
+            y = ygrid - pitch.pitch_size[1] / 2.025,
+            colorscale = "RdBu_r",
+            opacity = 0.8,
+            zsmooth = "best",
+            zmin = 0.0,
+            zmax = 1.0,
+            # showlegend=False,
+            colorbar = {"len": 0.3, "thickness": 10, "x": 0.9},
+            showscale = False,
+        )
+    )
+    
+    # plot attacking team
+    p.add_trace(
+        go.Scatter(
+            x= att_x - pitch.pitch_size[0] / 2,
+            y= att_y - pitch.pitch_size[1] / 2,
+            mode="markers",
+            marker_size=10,
+            marker_opacity=0.8,
+            marker_color="red",
+            marker_line_width=2,
+            marker_line_color="black",
+            text="attacking",
+            name="attacking",
+        )
+    )
+    
+    # plot defending team
+    p.add_trace(
+        go.Scatter(
+            x = def_x - pitch.pitch_size[0] / 2,
+            y = def_y - pitch.pitch_size[1] / 2,
+            mode = "markers",
+            marker_size = 10,
+            marker_opacity = 0.8,
+            marker_color = "blue",
+            marker_line_width = 2,
+            marker_line_color = "black",
+            text = "defending",
+            name = "defending",
+            
+        )
+    )
+    
+    p.add_trace(
+        go.Scatter(
+            x = ball_x - pitch.pitch_size[0] / 2,
+            y = ball_y - pitch.pitch_size[1] / 2,
+            marker_symbol = "circle",
+            marker_size = 10,
+            marker_opacity = 0.8,
+            marker_color = "white",
+            marker_line_width = 2,
+            marker_line_color = "black",
+            name = "ball",
+    )
+    )
+    
+    return p
