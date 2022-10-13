@@ -11,9 +11,10 @@ import re
 
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
 from fastcore.foundation import L
 from sklearn.cluster import KMeans, AgglomerativeClustering, SpectralClustering
-from mplsoccer.pitch import Pitch
+from omnisync.visualization.pitch import Pitch,plot_pitch
 from operator import itemgetter
 
 # %% ../nbs/01_pressurelines.ipynb 9
@@ -159,68 +160,78 @@ class PressureLines:
             ,index=[0]
         )
     
-    def _plot(self):
+    def _plot(self,pl="vertical"):
         "Plot the resulting clusters on a football pitch"
         
-        color = {0: "red", 1:"blue", 2:"black"}
+        pitch = Pitch()
+        coord = press.xy_input - [pitch.pitch_size[0] / 2,pitch.pitch_size[1] / 2]
         
-        vp_pitch = Pitch(pitch_type="custom",pitch_length=105.0, pitch_width=68.0,label=True)  
-        fig, ax = vp_pitch.draw()
-        vp_pitch.scatter(
-            self.xy_input[self.vp_output == 0,0],
-            self.xy_input[self.vp_output == 0,1], 
-            color="red",
-            ax=ax
-        )
-        vp_pitch.scatter(
-            self.xy_input[self.vp_output == 1,0],
-            self.xy_input[self.vp_output == 1,1],
-            color='blue',
-            ax=ax
-        )
-        vp_pitch.scatter(
-            self.xy_input[self.vp_output == 2,0],
-            self.xy_input[self.vp_output == 2,1],
-            color='black',
-            ax=ax
-        )
-        vp_pitch.scatter(
-            self.frame["ball_x"],
-            self.frame["ball_y"],
-            color='green',
-            ax=ax
-        )
+        if pl == "vertical":
+            plt_vpl = pitch.plot_pitch(show=False)
+            plt_vpl.add_trace(
+                go.Scatter(
+                    x=coord[self.vp_output == list(self.vpl_keys.keys())[0],0],
+                    y=coord[self.vp_output == list(self.vpl_keys.keys())[0],1],
+                    name="first vertical pressure line"
+                )
+            )
+            plt_vpl.add_trace(
+                go.Scatter(
+                    x=coord[self.vp_output == list(self.vpl_keys.keys())[1],0],
+                    y=coord[self.vp_output == list(self.vpl_keys.keys())[1],1],
+                    name="second vertical pressure line"
+                )
+            )
+            plt_vpl.add_trace(
+                go.Scatter(
+                    x=coord[self.vp_output == list(self.vpl_keys.keys())[2],0],
+                    y=coord[self.vp_output == list(self.vpl_keys.keys())[2],1],
+                    name="third vertical pressure line"
+                )
+            )
+            plt_vpl.add_trace(
+                go.Scatter(
+                    x=[self.frame["ball_x"]-pitch.pitch_size[0] / 2], 
+                    y=[self.frame["ball_y"]-pitch.pitch_size[1] / 2],
+                    name="ball",
+                    marker_color="black"
+                )
+            )
+            plt_vpl.update_traces(marker_symbol="circle",marker_size=12)
+            
+            return plt_vpl            
         
-        for key , i in zip(self.vpl_keys,range(1,4)):
-            print("vertical pressureline "+str(i)+": "+color.get(key))
-        
-        hp_pitch = Pitch(pitch_type="custom",pitch_length=105.0, pitch_width=68.0,label=True)  
-        fig, ax = hp_pitch.draw()
-        hp_pitch.scatter(
-            self.xy_input[self.hp_output == 0,0],
-            self.xy_input[self.hp_output == 0,1], 
-            color="red",
-            ax=ax
-        )
-        hp_pitch.scatter(
-            self.xy_input[self.hp_output == 1,0],
-            self.xy_input[self.hp_output == 1,1],
-            color='blue',
-            ax=ax
-        )
-        hp_pitch.scatter(
-            self.xy_input[self.hp_output == 2,0],
-            self.xy_input[self.hp_output == 2,1],
-            color='black',
-            ax=ax
-        )
-        hp_pitch.scatter(
-            self.frame["ball_x"],
-            self.frame["ball_y"],
-            color='green',
-            ax=ax
-        )
-        
-        for key , i in zip(self.hpl_keys,range(1,4)):
-            print("horizontal pressureline "+str(i)+": "+color.get(key))
+        elif pl == "horizontal":
+            plt_hpl = pitch.plot_pitch(show=False)
+            plt_hpl.add_trace(
+                go.Scatter(
+                    x=coord[self.hp_output == list(self.hpl_keys.keys())[0],0],
+                    y=coord[self.hp_output == list(self.hpl_keys.keys())[0],1],
+                    name="first horizontal pressure line"
+                )
+            )
+            plt_hpl.add_trace(
+                go.Scatter(
+                    x=coord[self.hp_output == list(self.hpl_keys.keys())[1],0],
+                    y=coord[self.hp_output == list(self.hpl_keys.keys())[1],1],
+                    name="second horizontal pressure line"
+                )
+            )
+            plt_hpl.add_trace(
+                go.Scatter(
+                    x=coord[self.hp_output == list(self.hpl_keys.keys())[2],0],
+                    y=coord[self.hp_output == list(self.hpl_keys.keys())[2],1],
+                    name="third horizontal pressure line"
+                )
+            )
+            plt_hpl.add_trace(
+                go.Scatter(
+                    x=[self.frame["ball_x"]-pitch.pitch_size[0] / 2], 
+                    y=[self.frame["ball_y"]-pitch.pitch_size[1] / 2],
+                    name="ball",
+                    marker_color="black"
+                )
+            )
+            plt_hpl.update_traces(marker_symbol="circle",marker_size=12)
 
+            return plt_hpl
