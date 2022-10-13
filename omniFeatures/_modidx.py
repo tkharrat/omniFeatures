@@ -34,6 +34,7 @@ d = { 'settings': { 'allowed_cell_metadata_keys': '',
                 'tst_flags': 'notest',
                 'user': 'tkharrat',
                 'version': '0.0.1'},
-  'syms': { 'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines',
-                                                     'omniFeatures.Features.pressurelines.PressureLines.fit': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines.fit',
-                                                     'omniFeatures.Features.pressurelines.PressureLines.plot': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines.plot'}}}
+  'syms': { 'omniFeatures.Features.distance_angle': { 'omniFeatures.Features.distance_angle.Dist_ang': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang',
+                                                      'omniFeatures.Features.distance_angle.Dist_ang.angle': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang.angle',
+                                                      'omniFeatures.Features.distance_angle.Dist_ang.dist': 'https://tkharrat.github.io/omniFeatures/Features.distance_angle.html#dist_ang.dist'},
+            'omniFeatures.Features.pressurelines': { 'omniFeatures.Features.pressurelines.PressureLines': 'https://tkharrat.github.io/omniFeatures/Features.pressurelines.html#pressurelines'}}}
