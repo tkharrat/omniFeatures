@@ -20,10 +20,10 @@ from operator import itemgetter
 class PressureLines:
     def __init__(
         self,
-        frame: pd.DataFrame() # one frame DataFrame,
-        events_to_frame: pd.DataFrame() # event_mapping DataFrame,
-        lineup: pd.DataFrame() #cluster type,
-        clustering_algo: #cluster type,
+        frame: pd.DataFrame(), # one frame DataFrame
+        events_to_frame: pd.DataFrame(), # event_mapping DataFrame
+        lineup: pd.DataFrame(), #cluster type
+        clustering_algo #cluster type
         *args,
         **kwars
     ):
